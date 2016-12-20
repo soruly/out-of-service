@@ -1,59 +1,61 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Server Maintenance</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://vjs.zencdn.net/5.8.0/video-js.css" rel="stylesheet">
-<link rel="stylesheet" href="bigvideo.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://vjs.zencdn.net/5.8.0/video.js"></script>
-<script src="bigvideo.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Server Maintenance</title>
+<link rel="stylesheet" href="/font-awesome.min.css">
 <style>
-html,body{height: 100%}
 body{
-  margin:0;
-  padding:0;
   font-family: Meiryo,"Microsoft JhengHei","Microsoft YaHei",sans-serif;
-  background-image: url('bg.jpg');
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
-video{
-  width:100%;
-  height:100%;
+#bgvideo { 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: url(/bg.jpg) no-repeat;
+  background-size: cover; 
 }
-.vjs-loading-spinner, .vjs-error-display, .vjs-modal-dialog, .vjs-hidden, .vjs-control-bar, .vjs-big-play-button {
-  display:none !important;
+#bgm {
+  display:none;
 }
-#banner{
+#banner {
+  display: table;
   position: relative;
-  padding:10px;
-}
-.alert{
-  opacity: 0.9;
-  margin-bottom:0;
-  border:none;
-  box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
-  background: rgba(255, 255, 255,0.8);
-  color:#000000;
-  font-size:1.2em;
-  font-family: Meiryo,"Microsoft JhengHei","Microsoft YaHei",sans-serif;
+  background: rgba(255,255,255,0.5);
+  box-shadow: 0 0 20px #333333;
+  border-radius: 5px;
+  margin: auto;
   transition:all 0.3s ease-out;
 }
-.alert:hover{
-  background: rgba(255, 255, 255,1);
+#banner:hover {
+  background: rgba(255,255,255,0.8);
+}
+#banner #message{
+  display: table-cell;
+  padding: 10px;
+}
+#banner #close {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 36px;
+  cursor:pointer;
 }
 #mute{
-  visibility: hidden;
   position: fixed;
   top:auto;
   bottom:0;
   right: 0;
   padding:20px;
+  width: 32px;
   color:#FFF;
   text-shadow: 0 0 3px #FFF;
   font-size:2em;
@@ -65,66 +67,54 @@ video{
   text-shadow: 0 0 5px #FFF;
   opacity: 1;
 }
-#bgm{
-  display: none;
-}
 </style>
-</head>
-<body>
-<!--
+
+<video playsinline autoplay muted loop poster="/bg.jpg" id="bgvideo">
+  <source src="/720p.mp4" type="video/mp4">
+</video>
+
+<audio id="bgm" src="64k.mp3" muted loop autoplay></audio>
+
 <div id="banner">
-<div class="alert alert-warning">
-<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<span id="message"></span>
+  <span id="message"></span>
+  <i id="close" class="fa fa-times" aria-hidden="true"></i>
 </div>
-</div>
--->
-<audio id="bgm" src="64k.mp3" volume="1" loop autoplay controls preload ></audio>
-<span id="mute" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
-<script type="text/javascript">
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-  
-}
-else{
-  $("#mute").css("visibility","visible");
-  var BV = new $.BigVideo();
-  BV.init();
-  BV.show('1080p.mp4',{ambient:true});
-  var player = BV.getPlayer();
-  var length = 49;
-  player.on("timeupdate", function(){
-    if (player.currentTime() > length) {
-      player.currentTime(0);
-    }
-  });
 
-  var toggleMute = function(){
-    if(document.querySelector("audio").volume == 0){
-      document.querySelector("audio").volume = 1;
-      $("#mute").removeClass("glyphicon-volume-up").addClass("glyphicon-volume-up");
-    }
-    else{
-      document.querySelector("audio").volume = 0;
-      $("#mute").removeClass("glyphicon-volume-up").addClass("glyphicon-volume-off");
-    }
+<i id="mute" class="fa fa-volume-off" aria-hidden="true"></i>
+
+<script>
+var bgm = document.getElementById('bgm');
+var player = document.getElementById('bgvideo');
+var message = document.getElementById('message');
+var toggleMute = function() {
+  bgm.muted = bgm.muted === true ? false : true;
+  if(bgm.muted){
+    document.getElementById('mute').classList.remove('fa-volume-up');
+    document.getElementById('mute').classList.add('fa-volume-off');
   }
-  $("#mute").click(toggleMute);
+  else{
+    document.getElementById('mute').classList.remove('fa-volume-off');
+    document.getElementById('mute').classList.add('fa-volume-up');
+  }
 }
+document.getElementById('mute').addEventListener("click", toggleMute);
+document.getElementById('close').addEventListener("click", function(){
+  document.getElementById('banner').style.opacity = 0;
+});
 
-/*
+player.addEventListener("timeupdate", function(e){
+  if(player.currentTime > 49) player.currentTime = 0;
+});
+
 var startTimeUTC = new Date(Date.UTC(2016, 2, 22, 01, 30));
 var finishTimeUTC = new Date(Date.UTC(2016, 2, 22, 09, 30));
-
-if(navigator.language.toLowerCase().indexOf("ja") === 0){
-  $("#message").html("<strong>メンテナンス中</strong> ただいまメンテナンス中です。 <br>"+finishTimeUTC.toLocaleString()+" に終了予定です。ご迷惑おかけしておりますが、メンテナンス終了まで今しばらく、お待ちください。");
+if (navigator.language.toLowerCase().indexOf("ja") === 0) {
+  message.innerHTML = "<strong>メンテナンス中</strong> ただいまメンテナンス中です。 <br>"+finishTimeUTC.toLocaleString()+" に終了予定です。ご迷惑おかけしておりますが、メンテナンス終了まで今しばらく、お待ちください。";
 }
 else if(navigator.language.toLowerCase().indexOf("zh") === 0){
-  $("#message").html("<strong>伺服器維護</strong> 由於電力系統維修，目前伺服器暫停服務。<br>伺服器預計會在 "+finishTimeUTC.toLocaleString()+" 左右恢復服務。不便之處 敬請原諒。"); 
+  message.innerHTML = "<strong>伺服器維護</strong> 由於電力系統維修，目前伺服器暫停服務。<br>伺服器預計會在 "+finishTimeUTC.toLocaleString()+" 左右恢復服務。不便之處 敬請原諒。";
 }
-else{
-  $("#message").html("<strong>Scheduled Maintenance</strong> Due to a power system repair, the server is under maintenance for the moment. <br>It should be back online at around "+finishTimeUTC.toLocaleString()+". Sorry for the inconvenience.");
+else {
+  message.innerHTML = "<strong>Scheduled Maintenance</strong> Due to a power system repair, the server is under maintenance for the moment. <br>It should be back online at around "+finishTimeUTC.toLocaleString()+". Sorry for the inconvenience.";
 }
-*/
 </script>
-</body>
-</html>
