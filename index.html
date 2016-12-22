@@ -26,28 +26,18 @@ body{
 #bgm {
   display:none;
 }
-#banner {
+#message {
   display: table;
-  position: relative;
   background: rgba(255,255,255,0.5);
   box-shadow: 0 0 20px #333333;
   border-radius: 5px;
   margin: auto;
   transition:all 0.3s ease-out;
-}
-#banner:hover {
-  background: rgba(255,255,255,0.8);
-}
-#banner #message{
-  display: table-cell;
   padding: 10px;
+  cursor: default;
 }
-#banner #close {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  width: 36px;
-  cursor:pointer;
+#message:hover {
+  background: rgba(255,255,255,0.8);
 }
 #mute{
   position: fixed;
@@ -75,10 +65,7 @@ body{
 
 <audio id="bgm" src="64k.mp3" muted loop autoplay></audio>
 
-<div id="banner">
-  <span id="message"></span>
-  <i id="close" class="fa fa-times" aria-hidden="true"></i>
-</div>
+<div id="message"></div>
 
 <i id="mute" class="fa fa-volume-off" aria-hidden="true"></i>
 
@@ -98,8 +85,8 @@ var toggleMute = function() {
   }
 }
 document.getElementById('mute').addEventListener("click", toggleMute);
-document.getElementById('close').addEventListener("click", function(){
-  document.getElementById('banner').style.opacity = 0;
+document.getElementById('message').addEventListener("click", function(){
+  document.getElementById('message').style.opacity = 0;
 });
 
 player.addEventListener("timeupdate", function(e){
