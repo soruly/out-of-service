@@ -5,21 +5,30 @@
 <style>
 body{
   font-family: Meiryo,"Microsoft JhengHei","Microsoft YaHei",sans-serif;
+  user-select: none;
 }
-#bgvideo { 
+@media screen and (min-aspect-ratio: 16/9) {
+  #bgvideo {
+    max-width: 100%;
+  }
+}
+@media screen and (max-aspect-ratio: 16/9) {
+  #bgvideo {
+    max-height: 100%;
+  }
+}
+
+#bgvideo {
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 30%;
   min-width: 100%;
   min-height: 100%;
   width: auto;
   height: auto;
   z-index: -100;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-  background: url(bg.jpg) no-repeat;
+  transform: translateX(-30%) translateY(-50%);
+  background: 30% 50% url(bg.jpg) no-repeat;
   background-size: cover; 
 }
 #bgm {
@@ -34,6 +43,7 @@ body{
   transition:all 0.3s ease-out;
   padding: 10px;
   cursor: default;
+  user-select: none;
 }
 #message:hover {
   background: rgba(255,255,255,0.8);
@@ -80,11 +90,9 @@ body{
   </defs>
 </svg>
 
-<video playsinline autoplay muted loop poster="bg.jpg" id="bgvideo">
-  <source src="720p.mp4" type="video/mp4">
-</video>
+<video id="bgvideo" muted playsinline autoplay loop src="1080p.mp4"></video>
 
-<audio id="bgm" src="64k.mp3" muted loop autoplay></audio>
+<audio id="bgm" src="320k.mp3" muted loop autoplay></audio>
 
 <div id="message"></div>
 
@@ -115,12 +123,12 @@ player.addEventListener("timeupdate", function(e){
 var startTimeUTC = new Date(Date.UTC(2016, 2, 22, 01, 30));
 var finishTimeUTC = new Date(Date.UTC(2016, 2, 22, 09, 30));
 if (navigator.language.toLowerCase().indexOf("ja") === 0) {
-  message.innerHTML = "<strong>メンテナンス中</strong> ただいまメンテナンス中です。 <br>"+finishTimeUTC.toLocaleString()+" に終了予定です。ご迷惑おかけしておりますが、メンテナンス終了まで今しばらく、お待ちください。";
+  message.innerHTML = "<strong>メンテナンス中</strong> ただいまメンテナンス中です。"+finishTimeUTC.toLocaleString()+" に終了予定です。ご迷惑おかけしておりますが、メンテナンス終了まで今しばらく、お待ちください。";
 }
 else if(navigator.language.toLowerCase().indexOf("zh") === 0){
-  message.innerHTML = "<strong>伺服器維護</strong> 由於電力系統維修，目前伺服器暫停服務。<br>伺服器預計會在 "+finishTimeUTC.toLocaleString()+" 左右恢復服務。不便之處 敬請原諒。";
+  message.innerHTML = "<strong>伺服器維護</strong> 由於電力系統維修，目前伺服器暫停服務。伺服器預計會在 "+finishTimeUTC.toLocaleString()+" 左右恢復服務。不便之處 敬請原諒。";
 }
 else {
-  message.innerHTML = "<strong>Scheduled Maintenance</strong> Due to a power system repair, the server is under maintenance for the moment. <br>It should be back online at around "+finishTimeUTC.toLocaleString()+". Sorry for the inconvenience.";
+  message.innerHTML = "<strong>Scheduled Maintenance</strong> Due to a power system repair, the server is under maintenance for the moment. It should be back online at around "+finishTimeUTC.toLocaleString()+". Sorry for the inconvenience.";
 }
 </script>
