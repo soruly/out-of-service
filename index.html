@@ -111,6 +111,7 @@ var player = document.getElementById('bgvideo');
 var message = document.getElementById('message');
 var toggleMute = function() {
   bgm.muted = bgm.muted === true ? false : true;
+  bgm.play();
   if(bgm.muted){
     document.getElementById('mute').innerHTML = '<svg class="icon icon-volume-mute2"><use xlink:href="#icon-volume-mute2"></use></svg>';
   }
