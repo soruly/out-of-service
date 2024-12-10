@@ -1,0 +1,94 @@
+body {
+  font-family: Meiryo, "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+  user-select: none;
+}
+@media screen and (min-aspect-ratio: 16/9) {
+  #bgvideo {
+    max-width: 100%;
+  }
+}
+@media screen and (max-aspect-ratio: 16/9) {
+  #bgvideo {
+    max-height: 100%;
+  }
+}
+
+#bgvideo {
+  position: fixed;
+  top: 50%;
+  left: 30%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  transform: translateX(-30%) translateY(-50%);
+  background: 30% 50% url(bg.jpg) no-repeat;
+  background-size: cover;
+}
+#bgm {
+  display: none;
+}
+#message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 20px #333333;
+  border-radius: 5px;
+  margin: 50px;
+  transition: all 0.3s ease-out;
+  padding: 10px;
+  cursor: default;
+  user-select: none;
+}
+#message:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+#mute {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  color: #fff;
+  text-shadow: 0 0 3px #fff;
+  font-size: 2em;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.3s ease-out;
+}
+#mute:hover {
+  text-shadow: 0 0 5px #fff;
+  opacity: 1;
+}
+
+.icons {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.github-corner > svg {
+  fill: #151513;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  border: 0;
+  right: 0;
+}
+.github-corner .octo-arm {
+  transform-origin: 130px 106px;
+}
