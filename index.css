@@ -1,28 +1,15 @@
 body {
   font-family: Meiryo, "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
   user-select: none;
-}
-@media screen and (min-aspect-ratio: 16/9) {
-  #bgvideo {
-    max-width: 100%;
-  }
-}
-@media screen and (max-aspect-ratio: 16/9) {
-  #bgvideo {
-    max-height: 100%;
-  }
+  margin: 0;
 }
 
-#bgvideo {
+#video {
   position: fixed;
-  top: 50%;
-  left: 30%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -100;
-  transform: translateX(-30%) translateY(-50%);
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center center;
   background: 30% 50% url(bg.jpg) no-repeat;
   background-size: cover;
 }
@@ -35,7 +22,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgb(255 255 255 / 0.8);
   box-shadow: 0 0 20px #333333;
   border-radius: 5px;
   margin: 50px;
@@ -45,7 +32,7 @@ body {
   user-select: none;
 }
 #message:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgb(255 255 255 / 0.9);
 }
 #mute {
   position: fixed;

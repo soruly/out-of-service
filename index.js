@@ -1,5 +1,5 @@
 var bgm = document.getElementById("bgm");
-var player = document.getElementById("bgvideo");
+var player = document.getElementById("video");
 var message = document.getElementById("message");
 var toggleMute = function () {
   bgm.muted = bgm.muted === true ? false : true;
